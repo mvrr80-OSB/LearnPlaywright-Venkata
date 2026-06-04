@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         bootstrap="/app/tests/phpunit/bootstrap.php"
+         colors="true"
+         beStrictAboutTestsThatDoNotTestAnything="true"
+         beStrictAboutOutputDuringTests="true"
+         beStrictAboutChangesToGlobalState="true"
+         failOnWarning="true"
+         cacheResult="false"
+         defaultTestSuite="govcms"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd">
+  <php>
+    <ini name="error_reporting" value="32767"/>
+    <ini name="memory_limit" value="-1"/>
+    <env name="SIMPLETEST_BASE_URL" value=""/>
+    <env name="SIMPLETEST_DB" value=""/>
+    <env name="BROWSERTEST_OUTPUT_DIRECTORY" value=""/>
+    <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
+  </php>
+  <testsuites>
+    <testsuite name="unit">
+      <file>/app/web/core/tests/TestSuites/UnitTestSuite.php</file>
+    </testsuite>
+    <testsuite name="kernel">
+      <file>/app/web/core/tests/TestSuites/KernelTestSuite.php</file>
+    </testsuite>
+    <testsuite name="functional">
+      <file>/app/web/core/tests/TestSuites/FunctionalTestSuite.php</file>
+    </testsuite>
+    <testsuite name="functional-javascript">
+      <file>/app/web/core/tests/TestSuites/FunctionalJavascriptTestSuite.php</file>
+    </testsuite>
+    <testsuite name="build">
+      <file>/app/web/core/tests/TestSuites/BuildTestSuite.php</file>
+    </testsuite>
+    <testsuite name="theme">
+      <directory>/app/web/themes</directory>
+    </testsuite>
+    <testsuite name="govcms-integration">
+      <directory>/app/tests/phpunit/integration</directory>
+    </testsuite>
+    <testsuite name="govcms">
+      <directory>/app/tests/phpunit/tests</directory>
+    </testsuite>
+  </testsuites>
+  <listeners>
+    <listener class="\Drupal\Tests\Listeners\DrupalListener">
+    </listener>
+  </listeners>
+   <!-- Settings for coverage reports. -->
+   <coverage>
+    <include>
+      <directory>/app/web/core/includes</directory>
+      <directory>/app/web/core/lib</directory>
+      <directory>/app/web/core/modules</directory>
+      <directory>/app/web/modules</directory>
+      <directory>/app/web/sites</directory>
+    </include>
+    <exclude>
+      <directory>/app/web/core/modules/*/src/Tests</directory>
+      <directory>/app/web/core/modules/*/tests</directory>
+      <directory>/app/web/modules/*/src/Tests</directory>
+      <directory>/app/web/modules/*/tests</directory>
+      <directory>/app/web/modules/*/*/src/Tests</directory>
+      <directory>/app/web/modules/*/*/tests</directory>
+      <directory suffix=".api.php">/app/web/core/lib/**</directory>
+      <directory suffix=".api.php">/app/web/core/modules/**</directory>
+      <directory suffix=".api.php">/app/web/modules/**</directory>
+    </exclude>
+  </coverage>
+</phpunit>

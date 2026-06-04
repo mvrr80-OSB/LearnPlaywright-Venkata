@@ -33,12 +33,12 @@ export default defineConfig({
     /* Base URL to use in actions like `await page.goto('')`. */
     
     //D11 base URL
-    baseURL: 'https://nginx-test-vanilla-govcms-11-beta.govcms7.amazee.io/',
+    //baseURL: 'https://nginx-test-vanilla-govcms-11-beta.govcms7.amazee.io/',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on',
+   // trace: 'on',
     screenshot: 'on',
-    video: 'on',
+   // video: 'on',
 
   },
 

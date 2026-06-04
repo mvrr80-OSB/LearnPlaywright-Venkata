@@ -1,0 +1,65 @@
+version: '2.1'
+
+jobs:
+  phpunit:
+    docker:
+      - image: 'govcmstesting/ci:latest-php8.3-apache'
+        command: ["apache2-foreground"]
+    working_directory: /app
+    steps:
+      - run:
+          name: Set Safe Directory for Git
+          command: git config --global --add safe.directory /tmp/_circleci_local_build_repo
+      - run:
+          name: Clean Previous Tests Directory
+          command: rm -rf tests
+      - checkout:
+          path: 'tests'
+      - run:
+          name: Run PHPUnit tests
+          command: govcms-phpunit --testdox --testsuite govcms-integration
+
+  cypress:
+    docker:
+      - image: 'govcmstesting/ci:latest-php8.3-apache'
+        command: ["apache2-foreground"]
+    working_directory: /app
+    steps:
+      - run:
+          name: Set Safe Directory for Git
+          command: git config --global --add safe.directory /tmp/_circleci_local_build_repo
+      - run:
+          name: Install GovCMS site
+          command: >
+            drush si -y govcms
+            --db-url=sqlite://sites/default/files/.ht.sqlite
+            --site-name='GovCMS'
+            --account-pass=password
+            install_configure_form.enable_update_status_emails=NULL
+            install_configure_form.enable_update_status_module=NULL || true
+      - run:
+          name: Clean Previous Tests Directory
+          command: rm -rf tests
+      - checkout:
+          path: 'tests'
+      - run:
+          name: Install Cypress Dependencies
+          command: |
+            cd tests/cy
+            npm ci
+      - run:
+          name: Run Cypress tests
+          command: |
+            cd tests/cy
+            npx cypress run --config baseUrl=http://localhost
+      - store_artifacts:
+          path: tests/cy/cypress/videos
+      - store_artifacts:
+          path: tests/cy/cypress/screenshots
+
+workflows:
+  version: 2
+  main:
+    jobs:
+      - phpunit
+      - cypress

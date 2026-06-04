@@ -1,0 +1,36 @@
+# Local development
+!/app/.gitkeep
+
+# Composer vendor
+vendor/
+
+# Node
+node_modules/
+
+# OS X
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDEA
+.idea
+
+# Lock files
+composer.lock
+cy/yarn.lock
+
+# Cypress file
+cy/cypress.env.json
+cy/cypress/screenshots
+cy/cypress/videos
+
+# Exclude everything in the data directory
+/data/*
+!/data/certs/.gitkeep
+!/data/composer/.gitkeep
+!/data/drupal_sites/.gitkeep
+!/data/letsencrypt/.gitkeep
+!/data/mariadb_data/.gitkeep
+!/data/registry/config.yml
+!/data/packeton/.gitkeep
+!/data/redis_data/.gitkeep
